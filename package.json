@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon backend/server.js"
   },
   "author": "Allen-Saji",
   "license": "MIT",
@@ -13,6 +14,8 @@
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.4",
     "express": "^4.18.2",
-    "express-async-handler": "^1.2.0"
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3"
   }
 }
