@@ -18,6 +18,11 @@ const charitySchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a phone number!"],
     },
+    authId: {
+      type: String,
+      required: [true, "Please add auth id!"],
+      unique: true,
+    },
     email: {
       type: String,
       required: [true, "Please add an email!"],

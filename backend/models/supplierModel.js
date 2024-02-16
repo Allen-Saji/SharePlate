@@ -6,6 +6,11 @@ const supplierSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a name!"],
     },
+    authId: {
+      type: String,
+      required: [true, "Please add auth id!"],
+      unique: true,
+    },
     location: {
       type: String,
       required: [true, "Please add a location!"],
