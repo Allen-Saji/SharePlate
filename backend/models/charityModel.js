@@ -11,11 +11,11 @@ const charitySchema = mongoose.Schema(
       required: [true, "Please upload a registration certificate!"],
     },
     latitude: {
-      type: String,
+      type: Number,
       required: [true, "Please add a latitude!"],
     },
     longitude: {
-      type: String,
+      type: Number,
       required: [true, "Please add a longitude!"],
     },
     phoneNumber: {

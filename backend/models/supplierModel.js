@@ -12,11 +12,11 @@ const supplierSchema = mongoose.Schema(
       unique: true,
     },
     latitude: {
-      type: String,
+      type: Number,
       required: [true, "Please add a latitude!"],
     },
     longitude: {
-      type: String,
+      type: Number,
       required: [true, "Please add a longitude!"],
     },
     phoneNumber: {
