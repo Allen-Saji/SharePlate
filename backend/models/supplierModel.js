@@ -11,9 +11,13 @@ const supplierSchema = mongoose.Schema(
       required: [true, "Please add auth id!"],
       unique: true,
     },
-    location: {
+    latitude: {
       type: String,
-      required: [true, "Please add a location!"],
+      required: [true, "Please add a latitude!"],
+    },
+    longitude: {
+      type: String,
+      required: [true, "Please add a longitude!"],
     },
     phoneNumber: {
       type: String,

@@ -10,9 +10,13 @@ const charitySchema = mongoose.Schema(
       type: String,
       required: [true, "Please upload a registration certificate!"],
     },
-    location: {
+    latitude: {
       type: String,
-      required: [true, "Please add a location!"],
+      required: [true, "Please add a latitude!"],
+    },
+    longitude: {
+      type: String,
+      required: [true, "Please add a longitude!"],
     },
     phoneNumber: {
       type: String,
