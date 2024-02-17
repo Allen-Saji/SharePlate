@@ -1,9 +1,11 @@
 const Donation = require("../models/donationModel");
+const { getLastDonation } = require("./resourceController");
 
 // Create a new donation
 exports.createDonation = async (req, res) => {
   try {
     const donation = await Donation.create(req.body);
+    getLastDonation();
     res.status(201).json({
       status: "success",
       data: {
