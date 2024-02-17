@@ -111,7 +111,6 @@ async function findNearestSuitableCenter(
   }
 }
 
-// Function to match donations with nearest suitable charity centers and handle ties
 async function matchDonationsAndDonate(
   lastDonation,
   totalQuantity,
@@ -128,37 +127,61 @@ async function matchDonationsAndDonate(
       center.capacity -= itemQuantity;
       totalQuantity -= itemQuantity;
 
+      // Adding the charity id to the donation model object
+      lastDonation.charity_ids.push(center._id);
+
       console.log(
         `Donation from Supplier ${lastDonation.supplier_id} for ${itemQuantity} ${lastDonation.itemType} donated to Charity Center ${center.id}`
       );
 
       if (totalQuantity === 0) {
         console.log("All donations utilized.");
-        return;
+        break;
       }
     }
   }
 
-  console.log("Remaining quantity distributed to other charity centers:");
-
-  for (const center of charityCenters) {
-    if (center.capacity > 0) {
-      const quantityToDonate = Math.min(totalQuantity, center.capacity);
-      center.capacity -= quantityToDonate;
-      totalQuantity -= quantityToDonate;
-
-      console.log(
-        `Remaining ${quantityToDonate} ${lastDonation.itemType} distributed to Charity Center ${center.id}`
-      );
-
-      if (totalQuantity === 0) {
-        console.log("All donations utilized.");
-        return;
-      }
+  if (lastDonation.isModified("charity_ids")) {
+    try {
+      await lastDonation.save();
+      console.log("Donation updated with charity ids.");
+    } catch (error) {
+      console.error("Error saving donation:", error);
     }
   }
 
-  console.log("Unable to fully utilize donations.");
+  // Handle remaining quantity if any
+  if (totalQuantity > 0) {
+    console.log("Remaining quantity distributed to other charity centers:");
+
+    for (const center of charityCenters) {
+      if (center.capacity > 0) {
+        const quantityToDonate = Math.min(totalQuantity, center.capacity);
+        center.capacity -= quantityToDonate;
+        totalQuantity -= quantityToDonate;
+
+        // Adding the charity id to the donation model object
+        lastDonation.charity_ids.push(center._id);
+
+        console.log(
+          `Remaining ${quantityToDonate} ${lastDonation.itemType} distributed to Charity Center ${center.id}`
+        );
+
+        if (totalQuantity === 0) {
+          console.log("All donations utilized.");
+          break;
+        }
+      }
+    }
+
+    // Save the donation with updated charity ids
+    try {
+      await lastDonation.save();
+      console.log("Donation updated with charity ids.");
+    } catch (error) {
+      console.error("Error saving donation:", error);
+    }
+  }
 }
 
 module.exports = {
