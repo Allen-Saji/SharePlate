@@ -117,10 +117,7 @@ async function matchDonationsAndDonate(
   totalQuantity,
   charityCenters
 ) {
-  const donationsMade = {}; // Track donations made with key as supplier_id + "_" + charity_center_id
-
-  let donation = lastDonation;
-  let itemQuantity = donation.itemQuantity;
+  let itemQuantity = lastDonation.itemQuantity;
 
   for (const center of charityCenters) {
     if (center.capacity >= totalQuantity) {
@@ -132,32 +129,36 @@ async function matchDonationsAndDonate(
       totalQuantity -= itemQuantity;
 
       console.log(
-        `Donation from Supplier ${donation.supplier_id} for ${itemQuantity} ${donation.itemType} donated to Charity Center ${center.id}`
+        `Donation from Supplier ${lastDonation.supplier_id} for ${itemQuantity} ${lastDonation.itemType} donated to Charity Center ${center.id}`
       );
 
-      break; // Exit loop if donation is fully utilized
-    }
-  }
-
-  if (totalQuantity > 0) {
-    console.log("Remaining quantity distributed to other charity centers:");
-
-    for (const center of charityCenters) {
-      if (center.capacity > 0) {
-        const quantityToDonate = Math.min(totalQuantity, center.capacity);
-        center.capacity -= quantityToDonate;
-        totalQuantity -= quantityToDonate;
-
-        console.log(
-          `Remaining ${quantityToDonate} ${donation.itemType} distributed to Charity Center ${center.id}`
-        );
-
-        if (totalQuantity === 0) {
-          break; // Exit loop if remaining quantity is distributed
-        }
+      if (totalQuantity === 0) {
+        console.log("All donations utilized.");
+        return;
       }
     }
   }
+
+  console.log("Remaining quantity distributed to other charity centers:");
+
+  for (const center of charityCenters) {
+    if (center.capacity > 0) {
+      const quantityToDonate = Math.min(totalQuantity, center.capacity);
+      center.capacity -= quantityToDonate;
+      totalQuantity -= quantityToDonate;
+
+      console.log(
+        `Remaining ${quantityToDonate} ${lastDonation.itemType} distributed to Charity Center ${center.id}`
+      );
+
+      if (totalQuantity === 0) {
+        console.log("All donations utilized.");
+        return;
+      }
+    }
+  }
+
+  console.log("Unable to fully utilize donations.");
 }
 
 module.exports = {
