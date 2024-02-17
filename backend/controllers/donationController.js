@@ -1,4 +1,4 @@
-const Donation = require("./models/donationModel");
+const Donation = require("../models/donationModel");
 
 // Create a new donation
 exports.createDonation = async (req, res) => {

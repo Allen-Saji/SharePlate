@@ -1,4 +1,4 @@
-const Charity = require("./models/charityModel");
+const Charity = require("../models/charityModel");
 
 // Create a new charity
 exports.createCharity = async (req, res) => {
