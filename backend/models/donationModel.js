@@ -23,10 +23,6 @@ const donationSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please add an item quantity"],
     },
-    date: {
-      type: Date,
-      required: [true, "Please add a donation date"],
-    },
   },
   {
     timestamps: true,
