@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { createCharity } = require("../controllers/charityController");
+const {
+  createCharity,
+  findUserByAuthId,
+} = require("../controllers/charityController");
 
 router.post("/charity", createCharity);
 router.get("/charity/:authId", findUserByAuthId);
