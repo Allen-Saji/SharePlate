@@ -47,6 +47,30 @@ exports.updateDonation = async (req, res) => {
   }
 };
 
+// Function to get all recent donations associated with a charity id
+exports.getRecentDonationsForCharity = async (req, res) => {
+  try {
+    const charityId = req.params.charityId; // Assuming the charity id is passed as a route parameter
+
+    // Find all recent donations associated with the given charity id
+    const recentDonations = await Donation.find({ charity_ids: charityId })
+      .sort({ createdAt: -1 }) // Sort by createdAt field in descending order to get the most recent donations first
+      .limit(10); // Limit the number of donations returned, you can adjust this as needed
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        donations: recentDonations,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+};
+
 // Delete a donation
 exports.deleteDonation = async (req, res) => {
   try {
