@@ -53,7 +53,7 @@ exports.findUserByAuthId = async (req, res) => {
     const user = await Supplier.findOne({ authId });
 
     if (!user) {
-      return res.status(404).json({
+      return res.json({
         status: "fail",
         message: "User not found",
       });
