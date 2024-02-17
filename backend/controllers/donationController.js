@@ -66,3 +66,39 @@ exports.deleteDonation = async (req, res) => {
     });
   }
 };
+
+// Get all donations for the current date
+exports.getDonationsForCurrentDate = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const startOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+    const endOfDay = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 1
+    );
+
+    const donations = await Donation.find({
+      date: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        donations,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+};
