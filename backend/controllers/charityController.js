@@ -66,3 +66,21 @@ exports.deleteCharity = async (req, res) => {
     });
   }
 };
+
+// Get all charities
+exports.getAllCharities = async (req, res) => {
+  try {
+    const charities = await Charity.find();
+    res.status(200).json({
+      status: "success",
+      data: {
+        charities,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "Internal server error",
+    });
+  }
+};
