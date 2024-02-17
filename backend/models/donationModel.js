@@ -7,10 +7,10 @@ const donationSchema = mongoose.Schema(
       ref: "Supplier",
       required: [true, "Please add a supplier ID"],
     },
-    charity_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Charity",
-    },
+    // charity_id: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Charity",
+    // },
     itemName: {
       type: String,
       required: [true, "Please add an item name"],
